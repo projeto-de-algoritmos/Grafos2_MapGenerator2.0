@@ -1,4 +1,4 @@
-export default class Edge {
+export default class Edge1 {
     id: number;
     weight: number;
     begin: number;
