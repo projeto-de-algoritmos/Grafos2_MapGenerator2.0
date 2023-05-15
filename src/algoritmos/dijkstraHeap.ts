@@ -38,6 +38,12 @@ export default function dijkstra(graph: Graph, start: City, end: City): { distan
     // Marca o nó como visitado
     visited[node.city.name] = true;
 
+    if(node.city.name === end.name){
+      break;
+    }
+
+
+
     // Atualiza as distâncias dos nós vizinhos
     node.list.forEach((neighbor) => {
       const edge = graph.getEdge(node, neighbor)!;

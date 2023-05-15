@@ -1,13 +1,13 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import Node1 from 'src/entity/node';
-import Graph from 'src/entity/graph';
+import * as vis from 'vis';
+
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Edge, Network, Node } from 'vis';
+
 import City from 'src/entity/city';
 import Edge1 from 'src/entity/edge';
-import { Network, Node, Edge } from 'vis';
-import * as vis from 'vis';
+import Graph from 'src/entity/graph';
+import Node1 from 'src/entity/node';
 import dijkstra from 'src/algoritmos/dijkstraHeap';
-
-
 
 @Component({
   selector: 'app-root',
@@ -42,19 +42,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(){
     var nodes = new vis.DataSet([
-      // {id: 1, label: 'Node 1'},
-      // {id: 2, label: 'Node 2'},
-      // {id: 3, label: 'Node 3'},
-      // {id: 4, label: 'Node 4'},
-      // {id: 5, label: 'Node 5'}
+
     ]);
 
   // create an array with edges
     var edges = new vis.DataSet([
-      // {from: 0, to: 1},
-      // {from: 1, to: 2},
-      // {from: 2, to: 4},
-      // {from: 2, to: 5}
+
     ]);
 
     var container = this.container.nativeElement;
@@ -84,8 +77,7 @@ export class AppComponent implements OnInit {
   }
 
   addEdge():void {
-
-    if(this.nodeA == null || this.nodeB == null){
+    if(this.nodeA === null || this.nodeB === null){
       alert("Selecione cidades");
       return;
     }
@@ -107,8 +99,9 @@ export class AppComponent implements OnInit {
     var ed1 = ed.get(0);
 
     var result = dijkstra(this.Grafo, this.cidadeStart.city, this.cidadeEnd.city);
+    
+    alert(result?.nodes);
 
-    console.log(result);
 
     if(ed1){
       ed1.color = {color:"red"};
