@@ -59,6 +59,10 @@ export class HeapMin<T> {
         return null;
       }
       const item = this.heap[0];
+      this.heap.shift();
+      if(this.heap.length === 0){
+        return item;
+      }
       this.heap[0] = this.heap.pop()!;
       this.ajustarParaBaixo();
       return item;
