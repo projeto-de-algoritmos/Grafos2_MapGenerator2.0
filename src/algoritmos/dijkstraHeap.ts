@@ -5,30 +5,30 @@ import { HeapMin } from "./heap";
 import Node1 from "src/entity/node";
 
 // Função que implementa o algoritmo de Dijkstra
-function dijkstra(graph: Graph, start: City, end: City): { [key: string]: number } {
+export default function dijkstra(graph: Graph, start: City, end: City): { distance: number, nodes: City[], edges: Edge[] } | null {
   const distances: { [key: string]: number } = {};
   const visited: { [key: string]: boolean } = {};
+  const previous: { [key: string]: { node: Node1, edge: Edge } | null } = {};
   const heap = new HeapMin<{ node: Node1; distance: number }>();
 
   // Inicializa as distâncias de todos os nós como infinito, exceto o nó de partida
   graph.nodes.forEach((node) => {
     distances[node.city.name] = Infinity;
     visited[node.city.name] = false;
+    previous[node.city.name] = null;
   });
   distances[start.name] = 0;
 
-
   // Insere o nó de partida no heap
-    if(!graph.getNodebyCity(start) == undefined){
-        const nodeABC = graph.getNodebyCity(start)!;
-        heap.inserir(0, { node: nodeABC, distance: 0 });         // ADD EVENT LISTENER TO THE BUTTON
-
-    }
+  if (graph.getNodebyCity(start) !== undefined) {
+    const startNode = graph.getNodebyCity(start)!;
+    heap.inserir(0, { node: startNode, distance: 0 });
+  }
 
   while (!heap.estaVazio()) {
     // Extrai o nó com menor distância do heap
-    const { elemento, distancia } = heap.extrair()!;
-    const {node, distance } = elemento;
+    const { distancia, elemento } = heap.extrair()!;
+    const { node, distance } = elemento;
 
     // Verifica se o nó já foi visitado
     if (visited[node.city.name]) {
@@ -44,10 +44,31 @@ function dijkstra(graph: Graph, start: City, end: City): { [key: string]: number
       const newDistance = distance + edge.weight;
       if (newDistance < distances[neighbor.city.name]) {
         distances[neighbor.city.name] = newDistance;
+        previous[neighbor.city.name] = { node: node, edge: edge };
         heap.inserir(newDistance, { node: neighbor, distance: newDistance });
       }
     });
   }
 
-  return distances;
+  // Verifica se foi possível encontrar um caminho até a cidade de destino
+  if (previous[end.name] === null) {
+    return null;
+  }
+
+  // Reconstrói o caminho a partir dos nós anteriores
+  const nodes: City[] = [];
+  const edges: Edge[] = [];
+  let currentCity: City | null = end;
+  while (currentCity !== null) {
+    nodes.unshift(currentCity);
+    const prev:any = previous[currentCity.name];
+    if (prev) {
+      edges.unshift(prev.edge);
+      currentCity = prev.node.city;
+    } else {
+      currentCity = null;
+    }
+  }
+
+  return { distance: distances[end.name], nodes, edges };
 }

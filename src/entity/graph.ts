@@ -21,9 +21,6 @@ export default class Graph {
         var nodeA = this.nodes.findIndex(x => x.id == newEdge.begin);
         var nodeB = this.nodes.findIndex(x => x.id == newEdge.end);
 
-        console.log(nodeA);
-        console.log(nodeB);
-
         this.nodes[nodeA].list.push(this.nodes[nodeB])
         
         this.edges.push(newEdge);

@@ -3,10 +3,9 @@ import Node1 from 'src/entity/node';
 import Graph from 'src/entity/graph';
 import City from 'src/entity/city';
 import Edge1 from 'src/entity/edge';
-import * as d3 from 'd3'
 import { Network, Node, Edge } from 'vis';
 import * as vis from 'vis';
-import Dijkstra from 'src/algorithms/dijkstra';
+import dijkstra from 'src/algoritmos/dijkstraHeap';
 
 
 
@@ -38,8 +37,8 @@ export class AppComponent implements OnInit {
 
   network : any;
 
-  djkCidadeA: Node1 | null = null;
-  djkCidadeB: Node1 | null = null;
+  cidadeStart: Node1 = new Node1(0, new City("a","b"));
+  cidadeEnd: Node1 = new Node1(0, new City("a","b"));
 
   ngOnInit(){
     var nodes = new vis.DataSet([
@@ -98,7 +97,6 @@ export class AppComponent implements OnInit {
     var edge = new Edge1(this.idEdge,this.nodeA.id, this.nodeB.id, this.pesoEdge);
     this.Grafo.addEdge(edge);
     
-    console.log(this.network.body)
     this.network.body.data.edges.add({ id: this.idEdge, from: this.nodeA.id, to: this.nodeB.id, color:{color:"blue"}, label:this.pesoEdge.toString(), arrows: "to"});
 
     this.idEdge++;
@@ -108,9 +106,9 @@ export class AppComponent implements OnInit {
     var ed = this.network.body.data.edges;
     var ed1 = ed.get(0);
 
-    var listEdge = Dijkstra();
+    var result = dijkstra(this.Grafo, this.cidadeStart.city, this.cidadeEnd.city);
 
-    
+    console.log(result);
 
     if(ed1){
       ed1.color = {color:"red"};

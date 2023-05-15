@@ -73,13 +73,13 @@
     <div>
         <label>Buscar menor caminho de:</label>
         <br>
-        <select [(ngModel)]="djkCidadeA">
+        <select [(ngModel)]="cidadeStart">
             <option *ngFor="let node of listNode" [ngValue]="node">{{node.city.name}}</option>
         </select>
 
         <label for="destino">para:</label>
         
-        <select [(ngModel)]="djkCidadeA">
+        <select [(ngModel)]="cidadeEnd">
             <option *ngFor="let node of listNode"  [ngValue]="node">{{node.city.name}}</option>
         </select>
         <button type="button" (click)="updateColor()">BUSCAR</button>    
