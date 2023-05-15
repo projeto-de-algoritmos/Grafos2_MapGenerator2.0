@@ -96,16 +96,29 @@ export class AppComponent implements OnInit {
 
   updateColor(){
     var ed = this.network.body.data.edges;
-    var ed1 = ed.get(0);
+
+    for(let i = 0; i < ed.length; i++){
+      var ed1 = ed.get(i);
+      ed1.color = {color:"blue"};
+      ed1.width = 1;
+      ed.update(ed1);
+    }
 
     var result = dijkstra(this.Grafo, this.cidadeStart.city, this.cidadeEnd.city);
     
-    alert(result?.nodes);
+    if(result === null){
+      alert("Não existe caminho entre as cidades");
+      return;
+    }else{
 
+      var caminho = result?.edges!;
 
-    if(ed1){
-      ed1.color = {color:"red"};
-      ed.update(ed1);
+      for(let i = 0; i < caminho?.length; i++){
+        var edge = ed.get(caminho[i].id);
+        edge.color = {color:"red"};
+        edge.width = 3;
+        ed.update(edge);
+      }
     }
   }
 }
