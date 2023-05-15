@@ -1,4 +1,4 @@
-# NomedoProjeto
+# MapGenerator2.0
 
 **Número da Lista**: 22<br>
 **Conteúdo da Disciplina**: Grafos 2<br>
