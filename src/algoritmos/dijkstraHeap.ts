@@ -30,6 +30,10 @@ export default function dijkstra(graph: Graph, start: City, end: City): { distan
     const { distancia, elemento } = heap.extrair()!;
     const { node, distance } = elemento;
 
+    if(distancia === Infinity){
+      return null;
+    }
+
     // Verifica se o nó já foi visitado
     if (visited[node.city.name]) {
       continue;
@@ -42,8 +46,6 @@ export default function dijkstra(graph: Graph, start: City, end: City): { distan
       break;
     }
 
-
-
     // Atualiza as distâncias dos nós vizinhos
     node.list.forEach((neighbor) => {
       const edge = graph.getEdge(node, neighbor)!;
@@ -54,12 +56,13 @@ export default function dijkstra(graph: Graph, start: City, end: City): { distan
         heap.inserir(newDistance, { node: neighbor, distance: newDistance });
       }
     });
+
+     // Verifica se foi possível encontrar um caminho até a cidade de destino
+    if (previous[end.name] === null) {
+      return null;
+    }
   }
 
-  // Verifica se foi possível encontrar um caminho até a cidade de destino
-  if (previous[end.name] === null) {
-    return null;
-  }
 
   // Reconstrói o caminho a partir dos nós anteriores
   const nodes: City[] = [];
