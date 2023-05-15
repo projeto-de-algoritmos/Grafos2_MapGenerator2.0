@@ -1,14 +1,13 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import Node1 from 'src/entity/node';
-import Graph from 'src/entity/graph';
+import * as vis from 'vis';
+
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Edge, Network, Node } from 'vis';
+
 import City from 'src/entity/city';
 import Edge1 from 'src/entity/edge';
-import * as d3 from 'd3'
-import { Network, Node, Edge } from 'vis';
-import * as vis from 'vis';
-import Dijkstra from 'src/algorithms/dijkstra';
-
-
+import Graph from 'src/entity/graph';
+import Node1 from 'src/entity/node';
+import dijkstra from 'src/algoritmos/dijkstraHeap';
 
 @Component({
   selector: 'app-root',
@@ -38,24 +37,17 @@ export class AppComponent implements OnInit {
 
   network : any;
 
-  djkCidadeA: Node1 | null = null;
-  djkCidadeB: Node1 | null = null;
+  cidadeStart: Node1 = new Node1(0, new City("a","b"));
+  cidadeEnd: Node1 = new Node1(0, new City("a","b"));
 
   ngOnInit(){
     var nodes = new vis.DataSet([
-      // {id: 1, label: 'Node 1'},
-      // {id: 2, label: 'Node 2'},
-      // {id: 3, label: 'Node 3'},
-      // {id: 4, label: 'Node 4'},
-      // {id: 5, label: 'Node 5'}
+
     ]);
 
   // create an array with edges
     var edges = new vis.DataSet([
-      // {from: 0, to: 1},
-      // {from: 1, to: 2},
-      // {from: 2, to: 4},
-      // {from: 2, to: 5}
+
     ]);
 
     var container = this.container.nativeElement;
@@ -85,8 +77,7 @@ export class AppComponent implements OnInit {
   }
 
   addEdge():void {
-
-    if(this.nodeA == null || this.nodeB == null){
+    if(this.nodeA === null || this.nodeB === null){
       alert("Selecione cidades");
       return;
     }
@@ -98,7 +89,6 @@ export class AppComponent implements OnInit {
     var edge = new Edge1(this.idEdge,this.nodeA.id, this.nodeB.id, this.pesoEdge);
     this.Grafo.addEdge(edge);
     
-    console.log(this.network.body)
     this.network.body.data.edges.add({ id: this.idEdge, from: this.nodeA.id, to: this.nodeB.id, color:{color:"blue"}, label:this.pesoEdge.toString(), arrows: "to"});
 
     this.idEdge++;
@@ -106,15 +96,29 @@ export class AppComponent implements OnInit {
 
   updateColor(){
     var ed = this.network.body.data.edges;
-    var ed1 = ed.get(0);
 
-    var listEdge = Dijkstra();
-
-    
-
-    if(ed1){
-      ed1.color = {color:"red"};
+    for(let i = 0; i < ed.length; i++){
+      var ed1 = ed.get(i);
+      ed1.color = {color:"blue"};
+      ed1.width = 1;
       ed.update(ed1);
+    }
+
+    var result = dijkstra(this.Grafo, this.cidadeStart.city, this.cidadeEnd.city);
+    
+    if(result === null){
+      alert("Não existe caminho entre as cidades");
+      return;
+    }else{
+
+      var caminho = result?.edges!;
+
+      for(let i = 0; i < caminho?.length; i++){
+        var edge = ed.get(caminho[i].id);
+        edge.color = {color:"red"};
+        edge.width = 3;
+        ed.update(edge);
+      }
     }
   }
 }
