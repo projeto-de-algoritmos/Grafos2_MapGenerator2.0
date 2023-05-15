@@ -92,7 +92,7 @@ export class AppComponent implements OnInit {
     }
     
     if(this.nodeA === this.nodeB){
-      alert("Não é possível adicionar aresta");
+      alert("Não é possível adicionar estrada");
       return;
     }
     var edge = new Edge1(this.idEdge,this.nodeA.id, this.nodeB.id, this.pesoEdge);
