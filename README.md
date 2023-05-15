@@ -13,8 +13,9 @@
 O projeto consiste em um gerador de mapas para jogos de RPG. O usuário pode adicionar cidades, estradas e realizar busca de menor caminho entre duas cidades, levando em consideração a distância de cada estrada.
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
-![img](./imgs/Captura%20de%20tela%20de%202023-05-15%2015-11-36.png)
+![img](./imgs/Captura%20de%20tela%20de%202023-05-15%2017-30-55.png)
+![img](./imgs/Captura%20de%20tela%20de%202023-05-15%2017-34-55.png)
+![img](./imgs/Captura%20de%20tela%20de%202023-05-15%2017-36-34.png)
 
 ## Instalação 
 **Linguagem**: TypeScript<br>
