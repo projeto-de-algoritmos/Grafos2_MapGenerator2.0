@@ -12,6 +12,9 @@
 ## Sobre 
 O projeto consiste em um gerador de mapas para jogos de RPG. O usuário pode adicionar cidades, estradas e realizar busca de menor caminho entre duas cidades, levando em consideração a distância de cada estrada.
 
+## Gravação
+[Entrega Grafos 2 - MapGenerator2.0](https://youtu.be/9p7VaKlN6Fs)
+
 ## Screenshots
 ![img](./imgs/Captura%20de%20tela%20de%202023-05-15%2017-30-55.png)
 ![img](./imgs/Captura%20de%20tela%20de%202023-05-15%2017-34-55.png)
