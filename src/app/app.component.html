@@ -1,0 +1,94 @@
+<h1>Awesome Graph Map Generator</h1>
+
+<div class="instrucoes"> 
+    <h3>Como utilizar a aplicação:</h3>
+    <dl>
+        <p>Adicione cidades: Insira o nome, descrição</p>
+        <p>Adicione estradas: Selecione a cidade de origem e destino da estrada e a distância</p>
+        <p>Calcule o menor caminho entre cidades: Selecione a cidade de partida e chegada e <br>descubra o melhor caminho entre elas</p>
+    </dl>
+</div>
+
+<br>
+
+    
+<div style="display: flex;">             
+
+    <div class="itemForms">
+        <form action="" method="post" id="formulario">
+            <div>
+                <label for="city__name">
+                    Insira o nome da cidade:
+                    <br />
+                    <input type="text" name="city__name" id="nome" [(ngModel)]="name" required>
+                </label>
+            </div>
+            <div>
+                <label for="city__description">
+                    Insira a descrição da cidade:
+                    <br />
+                    <input type="text" name="city__description" id="description" [(ngModel)]="description" required>
+                </label>
+            </div>
+            <div>
+                <button type="submit" id="submitbtn" (click)="addNode()"> Adicionar cidade</button>
+            </div>
+        </form>
+
+        <br>
+        
+        <label for="origem">Adicionar estrada de:</label>
+        <br>
+        <select id="origem" name="origem" [(ngModel)]="nodeA">
+            <option *ngFor="let node of listNode" [ngValue]="node">{{node.city.name}}</option>
+        </select>
+
+        <label for="destino">para:</label>
+        
+        <select id="destino" name="destino" [(ngModel)]="nodeB">
+            <option *ngFor="let node of listNode"  [ngValue]="node">{{node.city.name}}</option>
+        </select>
+    
+        <br>
+
+        <label for="destino">Distância:</label>
+            
+        <select [(ngModel)]="pesoEdge">
+            <option *ngFor="let p of listPesos" [ngValue]="p">{{p}}</option>
+        </select>
+
+        <br>
+
+        <button type="button" id="adicionar-estrada" (click)="addEdge()">Adicionar</button>
+
+        
+    </div>
+    <div>
+        <label style="font-weight: bold;"> Cidades existentes</label>
+        <ul>
+            <li *ngFor="let node of listNode">{{node.city.name}} - {{node.city.description}}</li>
+        </ul>
+    </div>
+
+    <div>
+        <label>Buscar menor caminho de:</label>
+        <br>
+        <select [(ngModel)]="djkCidadeA">
+            <option *ngFor="let node of listNode" [ngValue]="node">{{node.city.name}}</option>
+        </select>
+
+        <label for="destino">para:</label>
+        
+        <select [(ngModel)]="djkCidadeA">
+            <option *ngFor="let node of listNode"  [ngValue]="node">{{node.city.name}}</option>
+        </select>
+        <button type="button" (click)="updateColor()">BUSCAR</button>    
+    </div>
+    
+</div>
+    
+   <br>
+   <hr>
+
+    <div #mynetwork></div>
+
