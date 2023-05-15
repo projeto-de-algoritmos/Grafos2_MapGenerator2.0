@@ -14,6 +14,7 @@ O projeto consiste em um gerador de mapas para jogos de RPG. O usuário pode adi
 
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
+![img](./imgs/Captura%20de%20tela%20de%202023-05-15%2015-11-36.png)
 
 ## Instalação 
 **Linguagem**: TypeScript<br>
